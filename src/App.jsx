@@ -3,7 +3,6 @@ import {
   ArrowDownRight,
   ArrowRight,
   Atom,
-  Braces,
   CalendarDays,
   Check,
   ChevronDown,
@@ -15,29 +14,27 @@ import {
   Layers3,
   Lightbulb,
   Menu,
-  MessageCircle,
-  Palette,
-  Rocket,
   Sparkles,
   Users,
   X,
 } from 'lucide-react';
+import { OFFICIAL_GDG_URL, GOOGLE_DEVELOPERS_COMMUNITY_URL, isValidExternalUrl, RECRUITMENT_FORM_EMBED_URL, RECRUITMENT_FORM_URL, SOCIAL_LINKS } from './config/siteConfig.js';
+import { activities, organizers, pastEvents, teams } from './data/chapterData.js';
+import RecruitmentQr from './components/RecruitmentQr.jsx';
+import TechQuiz from './components/TechQuiz.jsx';
+import TeachableMachineDemo from './components/TeachableMachineDemo.jsx';
 
-const joinUrl = 'https://example.com/replace-with-registration-link';
 const navItems = [
   ['About', '#about'],
   ['Activities', '#activities'],
   ['Teams', '#teams'],
   ['Events', '#events'],
-  ['Contact', '#contact'],
+  ['Meet GDG', '#meet'],
+  ['Stall quiz', '#quiz'],
+  ['AI demo', '#ai-demo'],
 ];
-
-const activities = [
-  { icon: Code2, title: 'Technical workshops', text: 'Get hands-on with tools and ideas that turn curiosity into practical skills.', color: 'blue', number: '01' },
-  { icon: Rocket, title: 'Hackathons', text: 'Find your people, work through a challenge, and ship something together.', color: 'red', number: '02' },
-  { icon: Layers3, title: 'Google Study Jams', text: 'Learn at your own pace with guided paths and a community to keep you going.', color: 'yellow', number: '03' },
-  { icon: MessageCircle, title: 'Developer sessions', text: 'Share what you know, ask better questions, and learn from other builders.', color: 'green', number: '04' },
-];
+const recruitmentFormConfigured = isValidExternalUrl(RECRUITMENT_FORM_URL);
+const recruitmentEmbedConfigured = isValidExternalUrl(RECRUITMENT_FORM_EMBED_URL);
 
 const technologies = [
   { name: 'Google Cloud', icon: Cloud, color: 'blue', label: 'Cloud infrastructure' },
@@ -45,19 +42,6 @@ const technologies = [
   { name: 'Flutter', icon: Layers3, color: 'blue', label: 'Cross-platform UI' },
   { name: 'Gemini & Gen AI', icon: Sparkles, color: 'green', label: 'Generative AI' },
   { name: 'TensorFlow', icon: Atom, color: 'red', label: 'Machine learning' },
-];
-
-const teams = [
-  { title: 'Technical', icon: Braces, text: 'Build learning experiences, explore tools, and help members turn ideas into working projects.', color: 'blue' },
-  { title: 'Design', icon: Palette, text: 'Shape how the community looks and feels, from event visuals to thoughtful experiences.', color: 'red' },
-  { title: 'Management', icon: Users, text: 'Bring people together and make each workshop, meetup, and collaboration run smoothly.', color: 'yellow' },
-  { title: 'Social media', icon: MessageCircle, text: 'Tell the stories, share the useful bits, and help more students find their community.', color: 'green' },
-];
-
-const events = [
-  { date: 'DD MMM YYYY', type: 'WORKSHOP', title: 'Build your first cloud project', text: 'A sample event description. Replace this with confirmed details before publishing.', color: 'blue' },
-  { date: 'DD MMM YYYY', type: 'COMMUNITY', title: 'Ideas into prototypes', text: 'A sample event description. Replace this with confirmed details before publishing.', color: 'yellow' },
-  { date: 'DD MMM YYYY', type: 'STUDY JAM', title: 'Explore generative AI', text: 'A sample event description. Replace this with confirmed details before publishing.', color: 'green' },
 ];
 
 function GoogleMark() {
@@ -86,7 +70,7 @@ function App() {
           </button>
           <nav className={`nav-links${menuOpen ? ' nav-open' : ''}`} aria-label="Main navigation">
             {navItems.map(([label, href]) => <a key={href} href={href} onClick={closeMenu}>{label}</a>)}
-            <a className="button button-small button-light nav-join" href={joinUrl} target="_blank" rel="noreferrer" onClick={closeMenu}>Join us <ArrowRight size={15} /></a>
+            <a className="button button-small button-light nav-join" href={OFFICIAL_GDG_URL} target="_blank" rel="noreferrer" onClick={closeMenu}>Join Official GDG <ArrowRight size={15} /></a>
           </nav>
         </div>
       </header>
@@ -101,7 +85,7 @@ function App() {
               <p className="hero-description">A student-led community at BIET Lucknow for curious minds, creative builders, and everyone ready to make technology mean something.</p>
               <div className="hero-actions">
                 <a className="button button-primary" href="#about">Explore community <ArrowDownRight size={17} /></a>
-                <a className="text-link" href={joinUrl} target="_blank" rel="noreferrer">Join us <ArrowRight size={16} /></a>
+                <a className="text-link" href={OFFICIAL_GDG_URL} target="_blank" rel="noreferrer">Join Official GDG <ArrowRight size={16} /></a>
               </div>
               <div className="hero-note"><span className="note-line" />A place to start building, together.</div>
             </div>
@@ -133,7 +117,7 @@ function App() {
         <section className="intro-section section-pad" id="about">
           <div className="page-width intro-grid">
             <div className="intro-heading"><SectionLabel>01 / ABOUT US</SectionLabel><h2>Tech is better<br />when we <span className="serif-italic">make it</span><br />together.</h2></div>
-            <div className="intro-copy"><p className="intro-lead">Google Developer Groups on Campus is a community for students who want to explore technology, collaborate with others, and build projects that matter.</p><p>At BIET Lucknow, it’s a space to try something new, learn by doing, share what you discover, and meet people who are just as curious as you are. No matter where you’re starting from, there’s room to grow here.</p><a className="under-link" href="#activities">See what we do <ArrowRight size={15} /></a><div className="intro-stamp"><span>CURIOUS<br />BY NATURE</span><Lightbulb size={22} /></div></div>
+            <div className="intro-copy"><p className="intro-lead">GDG on Campus Bansal Institute of Engineering &amp; Technology is a student developer community for people who want to explore technology, learn, and innovate together.</p><p>Members explore new technologies through hands-on workshops, collaborate on projects, and learn about web and mobile development, cloud computing, artificial intelligence, and more. It’s a place to share knowledge and grow together, whether you’re just starting out or building on what you know.</p><div className="official-actions"><a className="button button-dark" href={OFFICIAL_GDG_URL} target="_blank" rel="noreferrer">Visit Official GDG Community <ExternalLink size={14} /></a><a className="button button-outline" href={OFFICIAL_GDG_URL} target="_blank" rel="noreferrer">Join Official GDG <ArrowRight size={15} /></a></div><div className="intro-stamp"><span>CURIOUS<br />BY NATURE</span><Lightbulb size={22} /></div></div>
           </div>
           <div className="page-width value-strip"><div><span className="value-number">01</span><strong>Explore</strong><span>Follow a question</span></div><div><span className="value-number">02</span><strong>Collaborate</strong><span>Find your people</span></div><div><span className="value-number">03</span><strong>Create</strong><span>Make it real</span></div></div>
         </section>
@@ -141,7 +125,7 @@ function App() {
         <section className="activities-section section-pad" id="activities">
           <div className="page-width">
             <div className="section-topline"><div><SectionLabel light>02 / WHAT WE DO</SectionLabel><h2>Learn by <span className="serif-italic">doing.</span></h2></div><p>Make space for the hands-on, the unexpected, and the ideas that get better when shared.</p></div>
-            <div className="activity-grid">{activities.map(({ icon: Icon, title, text, color, number }) => <article className="activity-card" key={title}><div className="card-meta"><span className={`icon-tile ${color}`}><Icon size={20} /></span><span>{number} / 04</span></div><h3>{title}</h3><p>{text}</p><a href={joinUrl} target="_blank" rel="noreferrer" aria-label={`Learn about ${title} and join the community`}><ArrowRight size={18} /></a></article>)}</div>
+            <div className="activity-grid">{activities.map(({ title, text, color }, index) => <article className="activity-card" key={title}><div className="card-meta"><span className={`icon-tile ${color}`}><Code2 size={20} /></span><span>{String(index + 1).padStart(2, '0')} / {String(activities.length).padStart(2, '0')}</span></div><h3>{title}</h3><p>{text}</p><a href={OFFICIAL_GDG_URL} target="_blank" rel="noreferrer" aria-label={`Visit the official GDG community to learn about ${title}`}><ArrowRight size={18} /></a></article>)}</div><p className="activity-disclaimer">These describe the kinds of community learning activities, not a list of confirmed BIET events.</p>
           </div>
         </section>
 
@@ -150,18 +134,33 @@ function App() {
         </section>
 
         <section className="teams-section section-pad" id="teams">
-          <div className="page-width"><div className="section-topline teams-topline"><div><SectionLabel>04 / FIND YOUR CREW</SectionLabel><h2>Many talents.<br /><span className="serif-italic">One community.</span></h2></div><p>There’s more than one way to make an impact. Bring what you’re good at, or discover something new.</p></div><div className="team-grid">{teams.map(({ title, icon: Icon, text, color }, index) => <article className="team-card" key={title}><span className={`team-icon ${color}`}><Icon size={19} /></span><span className="team-number">0{index + 1}</span><h3>{title} team</h3><p>{text}</p><a href={joinUrl} target="_blank" rel="noreferrer" aria-label={`Join the ${title} team`}><ArrowRight size={16} /></a></article>)}</div></div>
+          <div className="page-width"><div className="section-topline teams-topline"><div><SectionLabel>04 / FIND YOUR CREW</SectionLabel><h2>Many talents.<br /><span className="serif-italic">One community.</span></h2></div><p>These are college working teams, separate from official GDG membership. Bring what you’re good at, or discover something new.</p></div><div className="team-grid">{teams.map(({ title, icon: Icon, text, color }, index) => <article className="team-card" key={title}><span className={`team-icon ${color}`}><Icon size={19} /></span><span className="team-number">0{index + 1}</span><h3>{title}</h3><p>{text}</p><a href="#recruitment" aria-label={`Apply to the ${title}`}><ArrowRight size={16} /></a></article>)}</div></div>
+        </section>
+
+        <section className="meet-section section-pad" id="meet">
+          <div className="page-width"><div className="section-topline"><div><SectionLabel>05 / MEET GDG</SectionLabel><h2>A community to<br /><span className="serif-italic">grow together.</span></h2></div><p>GDG on Campus BIET brings students together to explore technology, learn through practice, and share what they discover.</p></div><div className="meet-layout"><div className="meet-card"><span className="feature-kicker"><Users size={15} /> CHAPTER ORGANIZERS</span><h3>People behind<br />the community.</h3><p>Organizer names and profiles below are listed on the official chapter page.</p><div className="organizer-list">{organizers.map((organizer) => <a className="organizer-row" href={organizer.profile} target="_blank" rel="noreferrer" key={organizer.name}><span className="organizer-avatar" aria-hidden="true">{organizer.name.split(' ').map((part) => part[0]).slice(0, 2).join('')}</span><span><strong>{organizer.name}</strong><small>{organizer.role}</small></span><ExternalLink size={14} /></a>)}</div></div><div className="meet-side"><div className="meet-official"><GoogleMark /><div><span className="feature-kicker">OFFICIAL CHAPTER PAGE</span><h3>Membership lives<br />over there.</h3><p>Join GDG through the official community page. This companion site does not recreate or collect official membership.</p><a className="under-link" href={OFFICIAL_GDG_URL} target="_blank" rel="noreferrer">Visit the official community <ExternalLink size={14} /></a></div></div><div className="meet-links"><a href={GOOGLE_DEVELOPERS_COMMUNITY_URL} target="_blank" rel="noreferrer">About Google Developer Groups <ExternalLink size={13} /></a><a href="#recruitment">Interested in a BIET team? <ArrowRight size={13} /></a></div></div></div></div>
         </section>
 
         <section className="events-section section-pad" id="events">
-          <div className="page-width"><div className="events-heading"><div><SectionLabel light>05 / ON THE RADAR</SectionLabel><h2>Make a date<br />with <span className="serif-italic">possibility.</span></h2></div><div className="sample-notice"><CalendarDays size={17} /><span><strong>Sample events</strong><br />Dates and details are editable placeholders, not confirmed college events.</span></div></div><div className="event-grid">{events.map((event) => <article className="event-card" key={event.title}><div className="event-card-top"><span className={`event-tag ${event.color}`}>{event.type}</span><span className="event-date"><CalendarDays size={14} />{event.date}</span></div><h3>{event.title}</h3><p>{event.text}</p><div className="event-bottom"><span>PLACEHOLDER EVENT</span><ArrowRight size={16} /></div></article>)}</div></div>
+          <div className="page-width"><div className="events-heading"><div><SectionLabel light>06 / CHAPTER HISTORY</SectionLabel><h2>Past events.<br /><span className="serif-italic">Shared learning.</span></h2></div><div className="sample-notice"><CalendarDays size={17} /><span><strong>Official event history</strong><br />These events and dates are listed on the official GDG chapter page.</span></div></div><div className="upcoming-empty"><span className="status-dot" /><p>No upcoming events listed right now. Check the official GDG page for updates.</p><a href={OFFICIAL_GDG_URL} target="_blank" rel="noreferrer">Official GDG page <ExternalLink size={13} /></a></div><div className="event-grid">{pastEvents.map((event) => <article className="event-card past-event" key={event.title}><div className="event-card-top"><span className="event-tag blue">PAST EVENT</span><span className="event-date"><CalendarDays size={14} />{event.date}</span></div><h3>{event.title}</h3><div className="event-bottom"><span>OFFICIAL CHAPTER LISTING</span><a href={event.url} target="_blank" rel="noreferrer" aria-label={`View official listing for ${event.title}`}><ExternalLink size={15} /></a></div></article>)}</div><a className="button button-outline events-all" href={OFFICIAL_GDG_URL} target="_blank" rel="noreferrer">View All Official Events <ExternalLink size={14} /></a></div>
         </section>
 
-        <section className="join-section" id="contact"><div className="join-shape join-shape-one" /><div className="join-shape join-shape-two" /><div className="page-width join-content"><SectionLabel>06 / YOUR NEXT STEP</SectionLabel><h2>Make something<br /><span className="serif-italic">worth sharing.</span></h2><p>Bring your questions, your half-formed ideas, your whole self. There’s a place for you in this community.</p><a className="button button-join" href={joinUrl} target="_blank" rel="noreferrer">Join the community <ArrowRight size={17} /></a><div className="join-placeholder"><ExternalLink size={13} /> Registration URL placeholder: replace with the official link</div></div><div className="join-spark spark-one" /><div className="join-spark spark-two" /><div className="join-check"><Check size={19} /></div></section>
+        <section className="stall-section section-pad" id="stall">
+          <div className="page-width"><div className="section-topline"><div><SectionLabel>07 / VISIT OUR STALL</SectionLabel><h2>Meet, make,<br /><span className="serif-italic">experiment.</span></h2></div><p>A quick introduction to GDG BIET, a team interest route, a tech quiz, and an optional camera demo. Works on your own device, too.</p></div><div className="stall-intro"><div><span className="feature-kicker">WHAT GDG IS</span><p>Google Developer Groups are communities for people interested in Google’s developer technology and the wider world of building software. GDG on Campus BIET is the student chapter for learning and collaboration at Bansal Institute of Engineering &amp; Technology.</p></div><a className="button button-dark" href={OFFICIAL_GDG_URL} target="_blank" rel="noreferrer">Explore official GDG <ExternalLink size={14} /></a></div>
+          <div className="stall-team-list"><div className="stall-team-heading"><SectionLabel>MEET THE BIET TEAMS</SectionLabel><p>Choose a way to contribute, learn with others, and help the community grow.</p></div><div className="stall-team-items">{teams.map(({ title, text, color }) => <article className="stall-team-item" key={title}><span className={`stall-team-dot ${color}`} /><div><h4>{title}</h4><p>{text}</p></div></article>)}</div></div>
+          <div className="stall-route-links"><a href="#quiz">Take the technology quiz <ArrowRight size={14} /></a><a href="#ai-demo">Try the AI demo <ArrowRight size={14} /></a></div>
+          <div className="stall-tools"><div id="recruitment" className="recruitment-block"><div className="recruitment-heading"><SectionLabel>COLLEGE TEAM RECRUITMENT</SectionLabel><h3>Find Your Place<br />in <span className="serif-italic">GDG BIET.</span></h3><p>Express interest in joining one of the college working teams. This is separate from joining the official GDG community.</p></div><div className="form-fields"><span>GOOGLE FORM FIELDS</span><p>Full Name · Email Address · Branch · Academic Year · Preferred Team · Technical Skills / Interests · Short Introduction</p>{recruitmentFormConfigured ? <a className="button button-dark" href={RECRUITMENT_FORM_URL} target="_blank" rel="noreferrer">Apply for a Team <ExternalLink size={14} /></a> : <button className="button button-dark" type="button" disabled>Apply for a Team</button>}{!recruitmentFormConfigured && <small>Configure the real Google Form URL in <code>src/config/siteConfig.js</code> to enable applications.</small>}</div></div><RecruitmentQr /></div>{recruitmentEmbedConfigured && <div className="form-embed"><div><SectionLabel>APPLICATION FORM</SectionLabel><h3>Team interest form</h3></div><iframe title="GDG BIET college team recruitment Google Form" src={RECRUITMENT_FORM_EMBED_URL} loading="lazy" /></div>}</div>
+        </section>
+
+        <section className="quiz-section section-pad" id="quiz"><div className="page-width"><TechQuiz /></div></section>
+
+        <section className="ai-section section-pad" id="ai-demo"><div className="page-width"><TeachableMachineDemo /></div></section>
+
+        <section className="join-section" id="contact"><div className="join-shape join-shape-one" /><div className="join-shape join-shape-two" /><div className="page-width join-content"><SectionLabel>08 / JOIN THE COMMUNITY</SectionLabel><h2>Make something<br /><span className="serif-italic">worth sharing.</span></h2><p>Bring your questions, your half-formed ideas, your whole self. Join the official GDG community and grow alongside fellow developers.</p><a className="button button-join" href={OFFICIAL_GDG_URL} target="_blank" rel="noreferrer">Join Official GDG <ArrowRight size={17} /></a><div className="join-placeholder"><ExternalLink size={13} /> Opens the official GDG community page</div></div><div className="join-spark spark-one" /><div className="join-spark spark-two" /><div className="join-check"><Check size={19} /></div></section>
       </main>
 
       <footer className="site-footer">
-        <div className="page-width footer-main"><div className="footer-brand"><a className="brand" href="#home"><GoogleMark /><span className="brand-copy"><strong>GDG on Campus</strong><small>BIET Lucknow</small></span></a><p>Learn out loud. Build in public.<br />Find your people along the way.</p></div><div className="footer-nav"><span className="footer-label">EXPLORE</span>{navItems.map(([label, href]) => <a href={href} key={href}>{label}</a>)}</div><div className="footer-social"><span className="footer-label">FIND US ONLINE</span><a href="https://example.com/replace-with-official-instagram-url" target="_blank" rel="noreferrer">Instagram <ExternalLink size={13} /></a><a href="https://example.com/replace-with-official-linkedin-url" target="_blank" rel="noreferrer">LinkedIn <ExternalLink size={13} /></a><a href="https://example.com/replace-with-official-youtube-url" target="_blank" rel="noreferrer">YouTube <ExternalLink size={13} /></a><small>Social URLs are placeholders.</small></div><a className="back-top" href="#home" aria-label="Back to top"><ArrowDownRight size={18} /></a></div>
+        <div className="page-width footer-main"><div className="footer-brand"><a className="brand" href="#home"><GoogleMark /><span className="brand-copy"><strong>GDG on Campus</strong><small>BIET Lucknow</small></span></a><p>Learn out loud. Build in public.<br />Find your people along the way.</p><div className="footer-official-links"><a href={OFFICIAL_GDG_URL} target="_blank" rel="noreferrer">Official GDG chapter <ExternalLink size={12} /></a><a href={GOOGLE_DEVELOPERS_COMMUNITY_URL} target="_blank" rel="noreferrer">Google Developers community <ExternalLink size={12} /></a></div>{recruitmentFormConfigured && <a className="footer-recruit-link" href={RECRUITMENT_FORM_URL} target="_blank" rel="noreferrer">BIET team recruitment form <ExternalLink size={12} /></a>}</div><div className="footer-nav"><span className="footer-label">EXPLORE</span>{navItems.map(([label, href]) => <a href={href} key={href}>{label}</a>)}<a href="#recruitment">Apply for a college team</a><a href="#ai-demo">AI demo</a></div><div className="footer-social"><span className="footer-label">CHAPTER LINKS</span>{Object.entries(SOCIAL_LINKS).filter(([, url]) => isValidExternalUrl(url)).map(([name, url]) => <a href={url} target="_blank" rel="noreferrer" key={name}>{name === 'linkedin' ? 'LinkedIn' : 'Discord'} <ExternalLink size={13} /></a>)}</div><a className="back-top" href="#home" aria-label="Back to top"><ArrowDownRight size={18} /></a></div>
         <div className="page-width footer-bottom"><span>© 2026 GDG ON CAMPUS · BIET LUCKNOW</span><span>BUILT WITH CURIOSITY <span className="footer-color-dots"><i /><i /><i /><i /></span></span></div>
       </footer>
     </>
